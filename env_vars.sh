@@ -44,13 +44,10 @@ export CUR_BRANCH
 BRANCH=$(git symbolic-ref --short HEAD)
 export BRANCH
 
-echo "*******"
 read -p "Version number: " VERSION_NUMBER
-echo "*******"
-VERA="nem0-Kernel"
-VERSION="${VERA}-T${VERSION_NUMBER}"
-ZIPNAME="${BRANCH}-T${VERSION_NUMBER}.zip"
-NEW_BOOT_IMG_NAME="${VERSION}-boot.img"
+VERA="nem0"
+VERSION="${VERA}-${BRANCH}-v${VERSION_NUMBER}"
+ZIPNAME="${BRANCH}-v${VERSION_NUMBER}.zip"
 export LOCALVERSION=$(echo "-${VERSION}")
 export ZIPNAME 
 export VERSION_NUMBER

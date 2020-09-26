@@ -21,24 +21,24 @@ export JOBS="$((COUNT * 2))"
 export ARCH=arm64
 export SUBARCH=arm64
 
-echo "*******"
-echo "Branch: $BRANCH"
-echo "*******"
+echo "Building on branch: $BRANCH"
 
-
-echo "*******"
 read -p "Do you want to build clean? [Y/N]" choice
 if [ $choice = "Y" ] || [ $choice = "y" ]; then 
-  make clean && make mrproper
+  make clean
+  make mrproper
   rm -rf out
   mkdir out
 fi
+
+echo "Version: $VERSION"
+read -p "Press enter to start build  "
+
 START=$(date +"%s")
 make O=out ${DEFCONFIG}
 
 #proton
 export KBUILD_COMPILER_STRING="$(${CLANG_PATH}/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')";
-
 
 PATH="${CLANG_PATH}/bin:${PATH}" \
 make O=out -j${JOBS} \
@@ -52,7 +52,6 @@ NM=llvm-nm \
 OBJCOPY=llvm-objcopy \
 OBJDUMP=llvm-objdump \
 STRIP=llvm-strip | tee build.log
-
 
 END=$(date +"%s")
 DIFF=$((END - START))
