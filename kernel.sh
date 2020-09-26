@@ -31,8 +31,12 @@ if [ $choice = "Y" ] || [ $choice = "y" ]; then
   mkdir out
 fi
 
+git log --oneline "origin/${BRANCH}..HEAD" >> changelog.txt
+
 echo "Version: $VERSION"
-read -p "Press enter to start build  "
+echo "Changelog:"
+cat changelog.txt
+read -p "Press enter to start build "
 
 START=$(date +"%s")
 make O=out ${DEFCONFIG}
@@ -76,6 +80,7 @@ rm -rf *.zip
 zip -r9 "${ZIPNAME}" * -x .git
 CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }') completed in $(convertsecs $DIFF)" 
 telegram-send --file "${ZIPNAME}" --caption "${CAPTION}"
+telegram-send --file changelog.txt --caption "changelog since last build"
 
 # Sleep to prevent errors such as:
 # {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 8","parameters":{"retry_after":8}}
