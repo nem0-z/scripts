@@ -31,10 +31,11 @@ if [ $choice = "Y" ] || [ $choice = "y" ]; then
   mkdir out
 fi
 
+rm -f changelog.txt
 git log --oneline "origin/${BRANCH}..HEAD" >> changelog.txt
 
 echo "Version: $VERSION"
-echo "Changelog:"
+echo "Changelog since last origin push:"
 cat changelog.txt
 read -p "Press enter to start build "
 
@@ -80,6 +81,7 @@ rm -rf *.zip
 zip -r9 "${ZIPNAME}" * -x .git
 CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }') completed in $(convertsecs $DIFF)" 
 telegram-send --file "${ZIPNAME}" --caption "${CAPTION}"
+cd ${PROJECT_DIRECTORY} || exit
 telegram-send --file changelog.txt --caption "changelog since last build"
 
 # Sleep to prevent errors such as:
