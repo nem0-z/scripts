@@ -44,9 +44,15 @@ export CUR_BRANCH
 BRANCH=$(git symbolic-ref --short HEAD)
 export BRANCH
 
+if [ ${BRANCH} = "master" ]; then 
+  VBRANCH="stable"
+else
+  VBRANCH="stable"
+fi
+
 read -p "Version number: " VERSION_NUMBER
 VERA="nem0"
-VERSION="${VERA}-${BRANCH}-v${VERSION_NUMBER}"
+VERSION="${VERA}-${VBRANCH}-v${VERSION_NUMBER}"
 ZIPNAME="${BRANCH}-v${VERSION_NUMBER}.zip"
 export LOCALVERSION=$(echo "-${VERSION}")
 export ZIPNAME 
