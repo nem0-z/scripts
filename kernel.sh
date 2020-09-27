@@ -82,7 +82,9 @@ zip -r9 "${ZIPNAME}" * -x .git
 CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }') completed in $(convertsecs $DIFF)" 
 telegram-send --file "${ZIPNAME}" --caption "${CAPTION}"
 cd ${PROJECT_DIRECTORY} || exit
-telegram-send --file changelog.txt --caption "changelog since last build"
+if [ -s "changelog.txt" ]; then
+  telegram-send --file changelog.txt --caption "changelog since last origin push"
+fi
 
 # Sleep to prevent errors such as:
 # {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 8","parameters":{"retry_after":8}}

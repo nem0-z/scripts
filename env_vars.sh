@@ -47,13 +47,13 @@ export BRANCH
 if [ ${BRANCH} = "master" ]; then 
   VBRANCH="stable"
 else
-  VBRANCH="stable"
+  VBRANCH="beta"
 fi
 
 read -p "Version number: " VERSION_NUMBER
 VERA="nem0"
 VERSION="${VERA}-${VBRANCH}-v${VERSION_NUMBER}"
-ZIPNAME="${BRANCH}-v${VERSION_NUMBER}.zip"
+ZIPNAME="${VBRANCH}-v${VERSION_NUMBER}.zip"
 export LOCALVERSION=$(echo "-${VERSION}")
 export ZIPNAME 
 export VERSION_NUMBER
