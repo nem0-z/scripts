@@ -23,13 +23,15 @@ export SUBARCH=arm64
 
 echo "Building on branch: $BRANCH"
 
-read -p "Do you want to build clean? [Y/N]" choice
-if [ $choice = "Y" ] || [ $choice = "y" ]; then 
+read -p "Do you want to build clean? [Y/N]" CHOICE
+if [ $CHOICE = "Y" ] || [ $CHOICE = "y" ]; then 
   make clean
   make mrproper
   rm -rf out
   mkdir out
 fi
+
+read -p "Do you want to regenerate defconfig? [Y/N]" DEF_REG
 
 rm -f changelog.txt
 git log --oneline "origin/${BRANCH}..HEAD" >> changelog.txt
@@ -39,11 +41,20 @@ echo "Changelog since last origin push:"
 cat changelog.txt
 read -p "Press enter to start build "
 
-START=$(date +"%s")
 make O=out ${DEFCONFIG}
+
+if [ $DEF_REG = "Y" ] || [ $DEF_REG = "y" ]; then
+		cp out/.config arch/arm64/configs/${DEFCONFIG}
+		git add arch/arm64/configs/${DEFCONFIG}
+		git commit --signoff -m "defconfig: regenerate and save
+
+This is an auto-generated commit"
+fi
 
 #proton
 export KBUILD_COMPILER_STRING="$(${CLANG_PATH}/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')";
+
+START=$(date +"%s")
 
 PATH="${CLANG_PATH}/bin:${PATH}" \
 make O=out -j${JOBS} \
