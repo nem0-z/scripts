@@ -89,7 +89,7 @@ find out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + > ${ANYKERNEL_DIR}/dtb
 cd ${ANYKERNEL_DIR}
 rm -rf *.zip
 # zip -r9 "${ZIPNAME}" * -x "Image"
-zip -r9 "${ZIPNAME}" * -x .git
+zip -r9 "${ZIPNAME}" * -x .git "Image"
 CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }') completed in $(convertsecs $DIFF)" 
 telegram-send --file "${ZIPNAME}" --caption "${CAPTION}" --timeout 60.0
 
