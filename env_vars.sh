@@ -62,3 +62,7 @@ export VERSION_NUMBER
 DEFCONFIG="nem0_defconfig"
 export DEFCONFIG
 
+export script_dir=${PROJECT_DIR}/scripts
+export IMG_NAME="boot.img"
+export NEW_IMG_NAME="${VBRANCH}-v${VERSION_NUMBER}-boot.img"
+
