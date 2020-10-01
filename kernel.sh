@@ -91,12 +91,7 @@ rm -rf *.zip
 # zip -r9 "${ZIPNAME}" * -x "Image"
 zip -r9 "${ZIPNAME}" * -x .git
 CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }') completed in $(convertsecs $DIFF)" 
-telegram-send --file "${ZIPNAME}" --caption "${CAPTION}"
-
-cd ${PROJECT_DIRECTORY} || exit
-if [ -s "changelog.txt" ]; then
-  telegram-send --file changelog.txt --caption "changelog since last origin push"
-fi
+telegram-send --file "${ZIPNAME}" --caption "${CAPTION}" --timeout 60.0
 
 cd ${script_dir} || exit
 # Weeb/Hentai patch for custom boot.img
@@ -138,5 +133,10 @@ $mkbootimg \
 sleep 2;
 
 cd ${script_dir}/out || exit
-telegram-send --file "${NEW_IMG_NAME}"
+telegram-send --file "${NEW_IMG_NAME}" --timeout 60.0
+
+cd ${PROJECT_DIRECTORY} || exit
+if [ -s "changelog.txt" ]; then
+  telegram-send --file changelog.txt --caption "changelog since last origin push" --timeout 60.0
+fi 
 
