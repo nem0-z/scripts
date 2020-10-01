@@ -47,7 +47,7 @@ export BRANCH
 if [ ${BRANCH} = "master" ]; then 
   VBRANCH="stable"
 else
-  VBRANCH=BRANCH
+  VBRANCH=$BRANCH
 fi
 
 read -p "Version number: " VERSION_NUMBER
