@@ -88,9 +88,8 @@ find out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + > ${ANYKERNEL_DIR}/dtb
 # POST ZIP OR REPORT FAILURE
 cd ${ANYKERNEL_DIR}
 rm -rf *.zip
-# zip -r9 "${ZIPNAME}" * -x "Image"
 zip -r9 "${ZIPNAME}" * -x .git "Image"
-CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }') completed in $(convertsecs $DIFF)" 
+CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }')" 
 telegram-send --file "${ZIPNAME}" --caption "${CAPTION}" --timeout 60.0
 
 cd ${script_dir} || exit
@@ -133,10 +132,12 @@ $mkbootimg \
 sleep 2;
 
 cd ${script_dir}/out || exit
-telegram-send --file "${NEW_IMG_NAME}" --timeout 60.0
+CAPTION="sha1sum: $(sha1sum ${NEW_IMG_NAME} | awk '{ print $1 }')" 
+telegram-send --file "${NEW_IMG_NAME}" --caption "${CAPTION}" --timeout 60.0
 
 cd ${PROJECT_DIRECTORY} || exit
 if [ -s "changelog.txt" ]; then
   telegram-send --file changelog.txt --caption "changelog since last origin push" --timeout 60.0
 fi 
 
+telegram-send "Build completed in $(convertsecs $DIFF)"
