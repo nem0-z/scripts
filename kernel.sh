@@ -77,6 +77,7 @@ export OUT_IMAGE="${PROJECT_DIRECTORY}/out/arch/arm64/boot/Image.gz"
 
 if [ ! -f "${OUT_IMAGE}" ]; then
   telegram-send "Build failed!"
+  telegram-send --file "${PROJECT_DIRECTORY}/build.log"
 	exit 1;
 fi
 
@@ -85,7 +86,7 @@ cp ${OUT_IMAGE} ${ANYKERNEL_DIR}
 find out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + > ${ANYKERNEL_DIR}/dtb
 
 
-# POST ZIP OR REPORT FAILURE
+# POST ZIP
 cd ${ANYKERNEL_DIR}
 rm -rf *.zip
 zip -r9 "${ZIPNAME}" * -x .git "Image"
@@ -141,3 +142,4 @@ if [ -s "changelog.txt" ]; then
 fi 
 
 telegram-send "Build completed in $(convertsecs $DIFF)"
+clear
