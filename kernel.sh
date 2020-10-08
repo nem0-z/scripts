@@ -46,7 +46,7 @@ make O=out ${DEFCONFIG}
 if [ $DEF_REG = "Y" ] || [ $DEF_REG = "y" ]; then
 		cp out/.config arch/arm64/configs/${DEFCONFIG}
 		git add arch/arm64/configs/${DEFCONFIG}
-		git commit --signoff -m "defconfig: regenerate and save
+		git commit --signoff -m "defconfig: Regenerate and save
 
 This is an auto-generated commit"
 fi
@@ -109,7 +109,7 @@ $magiskboot --compress=gzip ${ANYKERNEL_DIR}/Image ${ANYKERNEL_DIR}/Image.gz;
 mkdir -p ${script_dir}/out
 
 export OS="10.0.0"
-export SPL="2020-09"
+export SPL="2020-10"
 
 $mkbootimg \
     --kernel ${ANYKERNEL_DIR}/Image.gz \
