@@ -24,13 +24,6 @@ export SUBARCH=arm64
 echo "Building on branch: $BRANCH"
 
 read -p "Do you want to build clean? [Y/N]" CHOICE
-if [ $CHOICE = "Y" ] || [ $CHOICE = "y" ]; then 
-  make clean
-  make mrproper
-  rm -rf out
-  mkdir out
-fi
-
 read -p "Do you want to regenerate defconfig? [Y/N]" DEF_REG
 
 rm -f changelog.txt
@@ -40,6 +33,14 @@ echo "Version: $VERSION"
 echo "Changelog since last origin push:"
 cat changelog.txt
 read -p "Press enter to start build "
+
+
+if [ $CHOICE = "Y" ] || [ $CHOICE = "y" ]; then 
+  make clean
+  make mrproper
+  rm -rf out
+  mkdir out
+fi
 
 make O=out ${DEFCONFIG}
 
