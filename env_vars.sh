@@ -12,8 +12,8 @@ KBUILD_BUILD_USER=nem0
 KBUILD_BUILD_HOST=T460s
 export KBUILD_BUILD_USER KBUILD_BUILD_HOST
 
-PROJECT_DIR=/home/zlatan/karamel
-PROJECT_DIRECTORY=/home/zlatan/karamel/android_kernel_oneplus_sm8150
+PROJECT_DIR=${HOME}/kranel
+PROJECT_DIRECTORY=${PROJECT_DIR}/android_kernel_oneplus_sm8150
 export PROJECT_DIR PROJECT_DIRECTORY
 
 cd ${PROJECT_DIRECTORY} || exit
@@ -31,7 +31,7 @@ else
   
   #aosp
 	# CLANG_PATH=${PROJECT_DIR}/aosp-clang
-  # GCC_PATH=${PROJECT_DIR}/aosp-gcc
+  # GCC_PATH=${PROJECT_DIR}/aosp-gcc64
   # GCC32_PATH=${PROJECT_DIR}/aosp-gcc32
 fi
 export CROSS_COMPILE CROSS_COMPILE_ARM32 

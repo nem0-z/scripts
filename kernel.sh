@@ -95,6 +95,7 @@ CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }')"
 telegram-send --file "${ZIPNAME}" --caption "${CAPTION}" --timeout 60.0
 
 cd ${script_dir} || exit
+
 # Weeb/Hentai patch for custom boot.img
 mkbootimg=${script_dir}/bin/mkbootimg
 chmod 777 $mkbootimg
