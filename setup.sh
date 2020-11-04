@@ -9,6 +9,9 @@ cd ${HOME}/kranel || exit
 #Proton Clang 12 by dragun
 git clone https://github.com/kdrag0n/proton-clang.git --depth=1 proton-clang
 
+# GCC11 
+# git clone https://github.com/milouk/gcc-prebuilt-elf-toolchains gcc11
+
 #AOSP Clang and AOSP GCC for cross compilation
 # git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 aosp-clang
 # git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 aosp-gcc64

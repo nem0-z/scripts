@@ -52,23 +52,26 @@ if [ $DEF_REG = "Y" ] || [ $DEF_REG = "y" ]; then
 This is an auto-generated commit"
 fi
 
-#proton
-export KBUILD_COMPILER_STRING="$(${CLANG_PATH}/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')";
-
 START=$(date +"%s")
 
-PATH="${CLANG_PATH}/bin:${PATH}" \
-make O=out -j${JOBS} \
-CC="clang" \
-CLANG_TRIPLE="aarch64-linux-gnu-" \
-CROSS_COMPILE="aarch64-linux-gnu-" \
-CROSS_COMPILE_ARM32="arm-linux-gnueabi-" \
-LD=ld.lld \
-AR=llvm-ar \
-NM=llvm-nm \
-OBJCOPY=llvm-objcopy \
-OBJDUMP=llvm-objdump \
-STRIP=llvm-strip | tee build.log
+if [[ ${COMPILER} == "GCC" ]]; then
+	make -j${JOBS} O=out
+else
+	export KBUILD_COMPILER_STRING="$(${CLANG_PATH}/bin/clang --version | head -n 1 | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')";
+
+	PATH="${CLANG_PATH}/bin:${PATH}" \
+	make O=out -j${JOBS} \
+	CC="clang" \
+	CLANG_TRIPLE="aarch64-linux-gnu-" \
+	CROSS_COMPILE="aarch64-linux-gnu-" \
+	CROSS_COMPILE_ARM32="arm-linux-gnueabi-" \
+	LD=ld.lld \
+	AR=llvm-ar \
+	NM=llvm-nm \
+	OBJCOPY=llvm-objcopy \
+	OBJDUMP=llvm-objdump \
+	STRIP=llvm-strip | tee build.log
+fi
 
 END=$(date +"%s")
 DIFF=$((END - START))

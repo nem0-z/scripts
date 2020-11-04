@@ -5,7 +5,8 @@ IS_KERNEL_STANDALONE=y
 export IS_KERNEL_STANDALONE
 
 # Compiler
-export COMPILER="clang"
+read -p "Compiler(GCC/Clang): " COMPILER
+export COMPILER
 
 # Export custom User and Host
 KBUILD_BUILD_USER=nem0
@@ -23,7 +24,7 @@ ANYKERNEL_DIR="${PROJECT_DIR}/anykernel3"
 export ANYKERNEL_DIR
 
 if [[ ${COMPILER} == *"GCC"* ]]; then
-	CROSS_COMPILE="${PROJECT_DIR}/gcc/bin/aarch64-elf-"
+	CROSS_COMPILE="${PROJECT_DIR}/gcc11/aarch64-linux-elf/bin/aarch64-linux-elf-"
 	CROSS_COMPILE_ARM32="${PROJECT_DIR}/gcc32/bin/arm-eabi-"
 else
   #proton
