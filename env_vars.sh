@@ -52,9 +52,9 @@ else
 fi
 
 read -p "Version number: " VERSION_NUMBER
-VERA="nem0"
-VERSION="${VERA}-${VBRANCH}-v${VERSION_NUMBER}"
-ZIPNAME="${VBRANCH}-v${VERSION_NUMBER}.zip"
+VERA="nem0-z"
+VERSION="${VERA}-v${VERSION_NUMBER}"
+ZIPNAME="${VERA}-${VBRANCH}-v${VERSION_NUMBER}.zip"
 export LOCALVERSION=$(echo "-${VERSION}")
 export ZIPNAME 
 export VERSION_NUMBER
