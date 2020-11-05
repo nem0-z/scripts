@@ -114,7 +114,7 @@ $magiskboot --compress=gzip ${ANYKERNEL_DIR}/Image ${ANYKERNEL_DIR}/Image.gz;
 mkdir -p ${script_dir}/out
 
 export OS="10.0.0"
-export SPL="2020-10"
+export SPL="2020-11"
 
 $mkbootimg \
     --kernel ${ANYKERNEL_DIR}/Image.gz \
