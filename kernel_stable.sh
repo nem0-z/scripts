@@ -8,7 +8,7 @@ convertsecs() {
 }
 
 # get environment variables
-source ~/kranel/scripts/env_vars.sh
+source ~/kranel/scripts/env_vars_stable.sh
 #
 cd ${PROJECT_DIRECTORY} || exit
 
@@ -23,34 +23,22 @@ export SUBARCH=arm64
 
 echo "Building on branch: $BRANCH"
 
-read -p "Do you want to build clean? [Y/N]" CHOICE
-read -p "Do you want to regenerate defconfig? [Y/N]" DEF_REG
-
 rm -f changelog.txt
 git log --oneline "origin/${BRANCH}..HEAD" >> changelog.txt
 
 echo "Version: $VERSION"
-echo "Changelog since last origin push:"
-cat changelog.txt
-read -p "Press enter to start build "
 
-
-if [ $CHOICE = "Y" ] || [ $CHOICE = "y" ]; then 
-  make clean
-  make mrproper
-  rm -rf out
-  mkdir out
-fi
+make clean && make mrproper
+rm -rf out
+mkdir out
 
 make O=out ${DEFCONFIG}
 
-if [ $DEF_REG = "Y" ] || [ $DEF_REG = "y" ]; then
 		cp out/.config arch/arm64/configs/${DEFCONFIG}
 		git add arch/arm64/configs/${DEFCONFIG}
 		git commit --signoff -m "defconfig: Regenerate and save
 
 This is an auto-generated commit"
-fi
 
 START=$(date +"%s")
 
@@ -113,8 +101,8 @@ $magiskboot --compress=gzip ${ANYKERNEL_DIR}/Image ${ANYKERNEL_DIR}/Image.gz;
 
 mkdir -p ${script_dir}/out
 
-export OS="11.0.0"
-export SPL="2021-02"
+export OS="10.0.0"
+export SPL="2020-11"
 
 $mkbootimg \
     --kernel ${ANYKERNEL_DIR}/Image.gz \
