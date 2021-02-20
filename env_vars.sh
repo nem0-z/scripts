@@ -24,7 +24,7 @@ ANYKERNEL_DIR="${PROJECT_DIR}/anykernel3"
 export ANYKERNEL_DIR
 
 if [[ ${COMPILER} == *"GCC"* ]]; then
-	CROSS_COMPILE="${PROJECT_DIR}/gcc11/aarch64-linux-elf/bin/aarch64-linux-elf-"
+	CROSS_COMPILE="${PROJECT_DIR}/gcc11/aarch64-milouk-elf/bin/aarch64-milouk-elf-"
 	CROSS_COMPILE_ARM32="${PROJECT_DIR}/gcc32/bin/arm-eabi-"
 else
   #proton
