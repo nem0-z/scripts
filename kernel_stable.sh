@@ -12,6 +12,9 @@ source ~/kranel/scripts/env_vars_stable.sh
 #
 cd ${PROJECT_DIRECTORY} || exit
 
+#Merge to master and build there
+git checkout master
+
 # compilation
 #
 # First we need number of jobs
@@ -39,6 +42,7 @@ make O=out ${DEFCONFIG}
 		git commit --signoff -m "defconfig: Regenerate and save
 
 This is an auto-generated commit"
+    git push
 
 START=$(date +"%s")
 
@@ -101,8 +105,8 @@ $magiskboot --compress=gzip ${ANYKERNEL_DIR}/Image ${ANYKERNEL_DIR}/Image.gz;
 
 mkdir -p ${script_dir}/out
 
-export OS="10.0.0"
-export SPL="2020-11"
+export OS="11.0.0"
+export SPL="2021-02"
 
 $mkbootimg \
     --kernel ${ANYKERNEL_DIR}/Image.gz \
