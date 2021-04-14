@@ -8,7 +8,7 @@ convertsecs() {
 }
 
 # get environment variables
-source ~/kranel/scripts/env_vars_stable.sh
+source ~/kranel/scripts/stable_vars.sh
 #
 cd ${PROJECT_DIRECTORY} || exit
 
