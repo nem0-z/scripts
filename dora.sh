@@ -23,11 +23,11 @@ export SUBARCH=arm64
 
 echo "Building on branch: $BRANCH"
 
-read -p "Do you want to build clean? [Y/N]" CHOICE
+# read -p "Do you want to build clean? [Y/N]" CHOICE
+CHOICE=0
 read -p "Do you want to regenerate defconfig? [Y/N]" DEF_REG
-read -p "Build with CONFIG_UNICODE enabled (for YAAP)? [Y/N]" UNICODE_REG
-if [ $UNICODE_REG = "Y" ] || [ $UNICODE_REG = "y" ]; then 
-  sed -i 's/# CONFIG_UNICODE is not set/CONFIG_UNICODE=y/' arch/arm64/configs/${DEFCONFIG}
+
+if [ $SDCARD_FS = "N" ] || [ $SDCARD_FS = "n" ]; then 
   sed -i 's/CONFIG_SDCARD_FS=y/# CONFIG_SDCARD_FS is not set/' arch/arm64/configs/${DEFCONFIG}
   DEF_REG=0
 fi
@@ -53,6 +53,8 @@ if [ $DEF_REG = "Y" ] || [ $DEF_REG = "y" ]; then
 
 This is an auto-generated commit"
 fi
+
+echo "Making ${DEFCONFIG}"
 
 START=$(date +"%s")
 
@@ -81,9 +83,8 @@ DIFF=$((END - START))
 export OUT_IMAGE="${PROJECT_DIRECTORY}/out/arch/arm64/boot/Image.gz"
 
 if [ ! -f "${OUT_IMAGE}" ]; then
-  # telegram-send "Build failed!"
+  telegram-send "Build failed!"
   # telegram-send --file "${PROJECT_DIRECTORY}/build.log"
-  echo "Build failed RETARD!"
 	exit 1;
 fi
 
@@ -96,11 +97,13 @@ find out/arch/arm64/boot/dts -name '*.dtb' -exec cat {} + > ${ANYKERNEL_DIR}/dtb
 cd ${ANYKERNEL_DIR}
 rm -rf *.zip
 zip -r9 "${ZIPNAME}" * -x .git "Image"
+CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }')" 
+telegram-send --file "${ZIPNAME}" --caption "${CAPTION}" --timeout 120
 
 cd ${PROJECT_DIRECTORY}
 
-if [ $UNICODE_REG = "Y" ] || [ $UNICODE_REG = "y" ]; then 
-  sed -i 's/CONFIG_UNICODE=y/# CONFIG_UNICODE is not set/' arch/arm64/configs/${DEFCONFIG}
+if [ $SDCARD_FS = "N" ] || [ $SDCARD_FS = "n" ]; then 
   sed -i 's/# CONFIG_SDCARD_FS is not set/CONFIG_SDCARD_FS=y/' arch/arm64/configs/${DEFCONFIG}
+  DEF_REG=0
 fi
 
