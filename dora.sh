@@ -8,7 +8,7 @@ convertsecs() {
 }
 
 # get environment variables
-source ~/kranel/scripts/dora_vars.sh
+source ../scripts/dora_vars.sh
 #
 cd ${PROJECT_DIRECTORY} || exit
 
@@ -84,7 +84,6 @@ export OUT_IMAGE="${PROJECT_DIRECTORY}/out/arch/arm64/boot/Image.gz"
 
 if [ ! -f "${OUT_IMAGE}" ]; then
   telegram-send "Build failed!"
-  # telegram-send --file "${PROJECT_DIRECTORY}/build.log"
 	exit 1;
 fi
 
