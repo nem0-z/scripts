@@ -12,7 +12,7 @@ KBUILD_BUILD_USER=nem0
 KBUILD_BUILD_HOST=PacificOcean
 export KBUILD_BUILD_USER KBUILD_BUILD_HOST
 
-PROJECT_DIR=${HOME}/kranel
+PROJECT_DIR=${HOME}/kranelstuff
 PROJECT_DIRECTORY=${PROJECT_DIR}/dora_kernel_oneplus_sm8150
 export PROJECT_DIR PROJECT_DIRECTORY
 
@@ -27,7 +27,7 @@ if [[ ${COMPILER} == *"GCC"* ]]; then
 	CROSS_COMPILE_ARM32="${PROJECT_DIR}/gcc32/bin/arm-eabi-"
 else
   #proton
-	CLANG_PATH=${PROJECT_DIR}/proton-clang
+	CLANG_PATH=${PROJECT_DIR}/dora-clang
   
   #aosp
 	# CLANG_PATH=${PROJECT_DIR}/aosp-clang

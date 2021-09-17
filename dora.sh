@@ -98,6 +98,7 @@ rm -rf *.zip
 zip -r9 "${ZIPNAME}" * -x .git "Image"
 CAPTION="sha1sum: $(sha1sum ${ZIPNAME} | awk '{ print $1 }')" 
 telegram-send --file "${ZIPNAME}" --caption "${CAPTION}" --timeout 120
+telegram-send "Build completed in $(convertsecs $DIFF)"
 
 cd ${PROJECT_DIRECTORY}
 
@@ -106,3 +107,4 @@ if [ $SDCARD_FS = "N" ] || [ $SDCARD_FS = "n" ]; then
   DEF_REG=0
 fi
 
+clear

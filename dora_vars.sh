@@ -5,16 +5,17 @@ IS_KERNEL_STANDALONE=y
 export IS_KERNEL_STANDALONE
 
 # Compiler
-export COMPILER="Clang"
-# read -p "Choose compiler" COMPILER
-# export COMPILER
+# export COMPILER="Clang"
+# export COMPILER="GCC"
+read -p "Choose compiler: " COMPILER
+export COMPILER
 
 # Export custom User and Host
 KBUILD_BUILD_USER=nem0
 KBUILD_BUILD_HOST=PacificOcean
 export KBUILD_BUILD_USER KBUILD_BUILD_HOST
 
-PROJECT_DIR=${HOME}/kranel
+PROJECT_DIR=${HOME}/kranelstuff
 PROJECT_DIRECTORY=${PROJECT_DIR}/dora_kernel_oneplus_sm8150
 export PROJECT_DIR PROJECT_DIRECTORY
 
@@ -26,10 +27,10 @@ export ANYKERNEL_DIR
 
 if [[ ${COMPILER} == *"GCC"* ]]; then
 	CROSS_COMPILE="${PROJECT_DIR}/gcc-arm64/bin/aarch64-elf-"
-	CROSS_COMPILE_ARM32="${PROJECT_DIR}/gcc32/bin/arm-eabi-"
+	CROSS_COMPILE_ARM32="${PROJECT_DIR}/gcc-arm/bin/arm-eabi-"
 else
   #proton
-	CLANG_PATH=${PROJECT_DIR}/proton-clang
+	CLANG_PATH=${PROJECT_DIR}/dora-clang
   
   #aosp
 	# CLANG_PATH=${PROJECT_DIR}/aosp-clang

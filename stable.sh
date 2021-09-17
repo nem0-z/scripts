@@ -8,7 +8,7 @@ convertsecs() {
 }
 
 # get environment variables
-source ~/kranel/scripts/stable_vars.sh
+source ~/kranelstuff/scripts/stable_vars.sh
 #
 cd ${PROJECT_DIRECTORY} || exit
 
@@ -31,9 +31,9 @@ git log --oneline "origin/${BRANCH}..HEAD" >> changelog.txt
 
 echo "Version: $VERSION"
 
-make clean && make mrproper
-rm -rf out
-mkdir out
+# make clean && make mrproper
+# rm -rf out
+# mkdir out
 
 if [ $SDCARD_FS = "N" ] || [ $SDCARD_FS = "n" ]; then 
   sed -i 's/CONFIG_SDCARD_FS=y/# CONFIG_SDCARD_FS is not set/' arch/arm64/configs/${DEFCONFIG}
@@ -42,11 +42,11 @@ fi
 
 make O=out ${DEFCONFIG}
 
-# 		cp out/.config arch/arm64/configs/${DEFCONFIG}
-# 		git add arch/arm64/configs/${DEFCONFIG}
-# 		git commit --signoff -m "defconfig: Regenerate and save
-#
-# This is an auto-generated commit"
+		cp out/.config arch/arm64/configs/${DEFCONFIG}
+		git add arch/arm64/configs/${DEFCONFIG}
+		git commit --signoff -m "defconfig: Regenerate and save
+
+This is an auto-generated commit"
 
 START=$(date +"%s")
 
@@ -97,7 +97,6 @@ telegram-send --file "${ZIPNAME}" --caption "${CAPTION}" --timeout 60.0
 sleep 2;
 
 telegram-send "Build completed in $(convertsecs $DIFF)"
-clear
 
 cd ${PROJECT_DIRECTORY}
 
@@ -105,3 +104,5 @@ if [ $SDCARD_FS = "N" ] || [ $SDCARD_FS = "n" ]; then
   sed -i 's/# CONFIG_SDCARD_FS is not set/CONFIG_SDCARD_FS=y/' arch/arm64/configs/${DEFCONFIG}
   DEF_REG=0
 fi
+
+clear
